@@ -1,36 +1,31 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2
+SIZE = 1000000
 
-# default target
 all: iterative_merge_sort recursive_merge_sort
 
-# Compile
 iterative_merge_sort: iterative_merge_sort.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 recursive_merge_sort: recursive_merge_sort.c
 	$(CC) $(CFLAGS) -o $@ $<
 
-# Run
 run: all
 	@echo ===== Iterative =====
-	./iterative_merge_sort
+	./iterative_merge_sort $(SIZE)
 	@echo ===== Recursive =====
-	./recursive_merge_sort
+	./recursive_merge_sort $(SIZE)
 
-# Time measurement (Linux/Mac)
 time: all
 	@echo ===== Iterative =====
-	@time ./iterative_merge_sort
+	@time ./iterative_merge_sort $(SIZE)
 	@echo ===== Recursive =====
-	@time ./recursive_merge_sort
+	@time ./recursive_merge_sort $(SIZE)
 
-# Time measurement (Windows PowerShell)
 time_win: all
-	powershell -Command "Measure-Command { .\iterative_merge_sort.exe }"
-	powershell -Command "Measure-Command { .\recursive_merge_sort.exe }"
+	powershell -Command "Measure-Command { .\iterative_merge_sort.exe $(SIZE) }"
+	powershell -Command "Measure-Command { .\recursive_merge_sort.exe $(SIZE) }"
 
-# Benchmark
 bench_sizes: all
 	@echo "===== BENCHMARK ====="
 	@for n in 99999999; do \
@@ -41,7 +36,7 @@ bench_sizes: all
 		echo "Recursive:"; \
 		./recursive_merge_sort $$n; \
 	done
-#stress test
+
 stress_test: all
 	@echo "===== STRESS TEST ====="
 	@size=10000; \
@@ -59,6 +54,5 @@ stress_test: all
 		size=$$((size * 2)); \
 	done
 
-# clean
 clean:
 	rm -f *.exe iterative_merge_sort recursive_merge_sort

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Merges two sorted sub-arrays into a single sorted array.
 void merge(int arr[], int l, int m, int r, int temp[]) {
     int i = l;
     int j = m + 1;
@@ -35,6 +36,7 @@ void merge(int arr[], int l, int m, int r, int temp[]) {
     }
 }
 
+// Recursively divides and sorts the array.
 void mergeSortRecursive(int arr[], int l, int r, int temp[]) {
     if (l < r) {
         int m = l + (r - l) / 2;
@@ -46,6 +48,7 @@ void mergeSortRecursive(int arr[], int l, int r, int temp[]) {
     }
 }
 
+// Main merge sort function that handles memory allocation for the temporary array.
 void mergeSort(int arr[], int size) {
     int *temp = (int *)malloc(size * sizeof(int));
     if (temp == NULL) {
@@ -57,13 +60,21 @@ void mergeSort(int arr[], int size) {
     free(temp);
 }
 
+// Checks if the array is sorted in ascending order.
 int is_sorted(int *arr, int n) {
     for (int i = 1; i < n; i++) {
         if (arr[i-1] > arr[i]) return 0;
     }
     return 1;
 }
+
+// Main function to execute the recursive merge sort.
 int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Usage: %s <size>\n", argv[0]);
+        return 1;
+    }
+
     int n = atoi(argv[1]);
 
     int *arr = malloc(n * sizeof(int));

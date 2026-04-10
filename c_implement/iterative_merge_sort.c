@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Merges two sorted sub-arrays into a single sorted array.
 void merge(int l[], int l_size, int r[], int r_size, int result[]) {
     int i = 0, j = 0, k = 0;
 
@@ -22,6 +23,7 @@ void merge(int l[], int l_size, int r[], int r_size, int result[]) {
     }
 }
 
+// Sorts an array using an iterative bottom-up merge sort algorithm.
 void mergeSort(int arr[], int length) {
     int step = 1;
 
@@ -30,8 +32,10 @@ void mergeSort(int arr[], int length) {
             int l_size = step;
             int r_size = step;
 
-            if (i + step >= length) l_size = length - i;
-            if (i + step >= length) r_size = 0;
+            if (i + step >= length){
+                l_size = length - i;
+                r_size = 0;
+            } 
             else if (i + 2 * step > length) r_size = length - (i + step);
 
             int *l = (int *)malloc(l_size * sizeof(int));
@@ -61,6 +65,7 @@ void mergeSort(int arr[], int length) {
     }
 }
 
+// Checks if the array is sorted in ascending order.
 int is_sorted(int *arr, int n) {
     for (int i = 1; i < n; i++) {
         if (arr[i-1] > arr[i]) return 0;
@@ -68,7 +73,13 @@ int is_sorted(int *arr, int n) {
     return 1;
 }
 
+// Main function to execute the iterative merge sort.
 int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Usage: %s <size>\n", argv[0]);
+        return 1;
+    }
+
     int n = atoi(argv[1]);
 
     int *arr = malloc(n * sizeof(int));
