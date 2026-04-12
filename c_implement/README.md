@@ -10,12 +10,6 @@ Implementation of merge sort in C.
 - use commands like: make
 
 ### list of commands:
-- all
-- interative_merge_sort
-- recursive_merge_sort
-- run
-- time
-- time_win
-- bench_sizes
-- stress_test
+- auto
+- manual
 - clean
