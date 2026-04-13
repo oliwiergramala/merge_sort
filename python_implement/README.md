@@ -84,7 +84,7 @@ make benchmark
 
 This compares the performance of both implementations across different array sizes.
 
-### Clean Up
+### Clean Upss
 
 ```bash
 make clean
