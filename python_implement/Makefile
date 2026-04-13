@@ -1,40 +1,33 @@
-.PHONY: all recursive iterative run clean test benchmark
+.DEFAULT_GOAL:= build
+.PHONY: fmt lint build clean run-recursive run-iterative run-random-recursive run-random-iterative test
 
-# Default target
-all: test
+fmt:
+	python -m black main.py recursive_merge_sort.py iterative_merge_sort.py 2>/dev/null || true
+	python -m autopep8 --in-place main.py recursive_merge_sort.py iterative_merge_sort.py 2>/dev/null || true
 
-# Run with recursive merge sort
-recursive:
-	@MODE=recursive python main.py
+lint:
+	python -m pylint main.py recursive_merge_sort.py iterative_merge_sort.py 2>/dev/null || true
+	python -m flake8 main.py recursive_merge_sort.py iterative_merge_sort.py 2>/dev/null || true
 
-# Run with iterative merge sort
-iterative:
-	@MODE=iterative python main.py
+build: lint
+	python -m py_compile main.py recursive_merge_sort.py iterative_merge_sort.py
 
-# Run the program (default is recursive)
-run: recursive
-
-# Run tests
 test:
 	python -m pytest test_merge_sort.py -v
 
-# Run benchmark
-benchmark:
-	python benchmark.py
-
-# Clean up generated files
 clean:
-	@rm -f *.pyc
-	@rm -rf __pycache__
-	@rm -rf .pytest_cache
-	@echo Cleaned up
+	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+	find . -type f -name "*.pyc" -delete 2>/dev/null || true
+	find . -type d -name .pytest_cache -exec rm -rf {} + 2>/dev/null || true
 
-help:
-	@echo "Available targets:"
-	@echo "  make recursive   - Run merge sort with recursive implementation"
-	@echo "  make iterative   - Run merge sort with iterative implementation"
-	@echo "  make run         - Run merge sort (default recursive)"
-	@echo "  make test        - Run unit tests"
-	@echo "  make benchmark   - Run performance benchmark"
-	@echo "  make clean       - Clean up generated files"
-	@echo "  make help        - Show this help message"
+run-recursive:
+	MODE=recursive python main.py
+
+run-iterative:
+	MODE=iterative python main.py
+
+run-random-recursive:
+	python generate_array.py $(SIZE) | MODE=recursive python main.py
+
+run-random-iterative:
+	python generate_array.py $(SIZE) | MODE=iterative python main.py
