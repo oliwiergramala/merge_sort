@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func merge(left, right []int) []int {
@@ -45,11 +46,16 @@ func main() {
 
 	var sorted []int
 
+	start := time.Now()
+
 	if mode == "recursive" {
 		sorted = MergeSortRecursive(arr)
 	} else {
 		sorted = MergeSortIterative(arr)
 	}
 
+
 	fmt.Println("Sorted array:", sorted)
+	elapsed := time.Since(start).Seconds() * 1000
+	fmt.Printf("Time: %.6f ms\n", elapsed)
 }

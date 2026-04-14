@@ -2,7 +2,6 @@ CC = gcc
 CFLAGS = -Wall -Wextra -O2
 BINS = iterative_merge_sort recursive_merge_sort
 
-# Compiles both programs
 all: $(BINS)
 
 iterative_merge_sort: iterative_merge_sort.c
@@ -11,7 +10,6 @@ iterative_merge_sort: iterative_merge_sort.c
 recursive_merge_sort: recursive_merge_sort.c
 	$(CC) $(CFLAGS) -o $@ $<
 
-# Allows manual entry of numbers (space-separated)
 manual: all
 	@read -p "Enter numbers to sort (space-separated): " vals; \
 	echo "\n--- Iterative ---"; \
@@ -19,7 +17,6 @@ manual: all
 	echo "--- Recursive ---"; \
 	./recursive_merge_sort -m $$vals
 
-# Allows entering the size for a random array
 auto: all
 	@read -p "Enter array size (random values): " size; \
 	echo "\n--- Iterative ---"; \
@@ -27,6 +24,13 @@ auto: all
 	echo "--- Recursive ---"; \
 	./recursive_merge_sort -r $$size
 
-# Removes compiled binaries
+run-iterative: iterative_merge_sort
+	@read -p "Enter numbers to sort (space-separated): " vals; \
+	./iterative_merge_sort -m $$vals
+
+run-recursive: recursive_merge_sort
+	@read -p "Enter numbers to sort (space-separated): " vals; \
+	./recursive_merge_sort -m $$vals
+
 clean:
 	rm -f $(BINS) *.exe
