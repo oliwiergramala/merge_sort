@@ -110,8 +110,8 @@ int main(int argc, char *argv[])
         print_array(arr, n);
     }
 
-    double time_spent = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-    printf("Time: %.9f s | Sorted: %s\n", time_spent, is_sorted(arr, n) ? "Yes" : "No");
+    double time_spent = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000.0;
+    printf("Time: %.6f ms | Sorted: %s\n", time_spent, is_sorted(arr, n) ? "Yes" : "No");
 
     free(arr);
     return 0;
