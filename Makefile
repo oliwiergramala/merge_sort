@@ -13,7 +13,7 @@ clean:
 	$(MAKE) -C c_implement clean
 
 random:
-	shuf -i 0-100 -n $(SIZE)| tr '\n' ' ' > array
+	shuf -i 0-100 -r -n $(SIZE)| tr '\n' ' ' > array
 
 run-test-random: random run-recursive run-iterative
 
